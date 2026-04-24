@@ -1,4 +1,5 @@
 import os
+import json
 import torch
 import torch.nn as nn
 import numpy as np
@@ -79,6 +80,12 @@ def train():
 
     torch.save(model.state_dict(), "model.pth")
     joblib.dump(scaler, "scaler.joblib")
+
+    model_name = "IrisMLP (4-16-16-3)"
+    with open("metrics.json", "w") as f:
+        json.dump(
+            {"model_name": model_name, "accuracy": accuracy, "f1_macro": f1}, f, indent=2
+        )
 
     tracking_uri = os.environ.get("MLFLOW_TRACKING_URI", "file:./mlruns")
     mlflow.set_tracking_uri(tracking_uri)
