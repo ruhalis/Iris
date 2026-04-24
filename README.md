@@ -35,3 +35,9 @@ You will get
 ```
 {"predicted_class":0,"predicted_label":"setosa","probabilities":{"setosa":0.9999,"versicolor":0.0001,"virginica":0.0}}% 
 ```
+
+#### OR
+
+```
+localhost:8501
+```
