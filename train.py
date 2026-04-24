@@ -78,11 +78,17 @@ def train():
         print(f"\nTest Accuracy: {accuracy * 100:.2f}%")
         print(f"Test F1 (macro): {f1:.4f}")
 
-    torch.save(model.state_dict(), "model.pth")
-    joblib.dump(scaler, "scaler.joblib")
+    weights_dir = "weights"
+    os.makedirs(weights_dir, exist_ok=True)
+    model_path = os.path.join(weights_dir, "model.pth")
+    scaler_path = os.path.join(weights_dir, "scaler.joblib")
+    metrics_path = os.path.join(weights_dir, "metrics.json")
+
+    torch.save(model.state_dict(), model_path)
+    joblib.dump(scaler, scaler_path)
 
     model_name = "IrisMLP (4-16-16-3)"
-    with open("metrics.json", "w") as f:
+    with open(metrics_path, "w") as f:
         json.dump(
             {"model_name": model_name, "accuracy": accuracy, "f1_macro": f1}, f, indent=2
         )
