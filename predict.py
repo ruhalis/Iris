@@ -6,9 +6,9 @@ from train import Model
 CLASS_NAMES = ["setosa", "versicolor", "virginica"]
 
 def predict(features: list[float]) -> dict:
-    scaler = joblib.load("scaler.joblib")
+    scaler = joblib.load("weights/scaler.joblib")
     model = Model()
-    model.load_state_dict(torch.load("model.pth", weights_only=True))
+    model.load_state_dict(torch.load("weights/model.pth", weights_only=True))
     model.eval()
 
     X = np.array(features).reshape(1, -1)

@@ -102,8 +102,8 @@ def train():
             mlflow.log_params(params)
             mlflow.log_metric("accuracy", accuracy)
             mlflow.log_metric("f1_macro", f1)
-            mlflow.log_artifact("model.pth")
-            mlflow.log_artifact("scaler.joblib")
+            mlflow.log_artifact(model_path)
+            mlflow.log_artifact(scaler_path)
 
             mlflow.pytorch.log_model(
                 pytorch_model=model,

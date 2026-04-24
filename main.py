@@ -15,8 +15,9 @@ class IrisInput(BaseModel):
 
 
 def _load_info():
-    if os.path.exists("metrics.json"):
-        with open("metrics.json") as f:
+    path = "weights/metrics.json"
+    if os.path.exists(path):
+        with open(path) as f:
             return json.load(f)
     return {"model_name": "unknown", "accuracy": None, "f1_macro": None}
 
