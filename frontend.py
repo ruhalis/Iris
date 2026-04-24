@@ -6,7 +6,17 @@ API_URL = os.environ.get("API_URL", "http://localhost:8000")
 
 st.set_page_config(page_title="Iris Classifier", page_icon="🌸")
 st.title("Iris Classifier")
-st.caption(f"API: {API_URL}")
+
+try:
+    info = requests.get(f"{API_URL}/info", timeout=5).json()
+    c1, c2 = st.columns(2)
+    c1.metric("Model", info.get("model_name", "unknown"))
+    f1 = info.get("f1_macro")
+    c2.metric("F1 (macro)", f"{f1:.4f}" if isinstance(f1, (int, float)) else "n/a")
+except Exception as e:
+    st.warning(f"Could not load model info: {e}")
+
+st.divider()
 
 col1, col2 = st.columns(2)
 with col1:
