@@ -1,18 +1,4 @@
 services:
-  mlflow:
-    build: .
-    ports:
-      - "5000:5000"
-    volumes:
-      - mlflow-data:/mlflow
-    command: >
-      mlflow server
-      --host 0.0.0.0
-      --port 5000
-      --backend-store-uri sqlite:////mlflow/mlflow.db
-      --default-artifact-root /mlflow/artifacts
-    restart: unless-stopped
-
   api:
     build: .
     ports:
@@ -30,6 +16,3 @@ services:
     depends_on:
       - api
     restart: unless-stopped
-
-volumes:
-  mlflow-data:
