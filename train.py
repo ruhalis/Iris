@@ -19,10 +19,11 @@ class Model(nn.Module):
         self.fc2 = nn.Linear(16, 16)
         self.fc3 = nn.Linear(16, 3)
         self.relu = nn.ReLU()
+        self.dropout = nn.Dropout(p=0.3)
 
     def forward(self, x):
-        x = self.relu(self.fc1(x))
-        x = self.relu(self.fc2(x))
+        x = self.dropout(self.relu(self.fc1(x)))
+        x = self.dropout(self.relu(self.fc2(x)))
         x = self.fc3(x)
         return x
 
@@ -34,6 +35,8 @@ def train():
         "hidden1": 16,
         "hidden2": 16,
         "optimizer": "Adam",
+        "weight_decay": 1e-4,
+        "dropout": 0.3,
         "test_size": 0.2,
         "random_state": 42,
     }
@@ -55,7 +58,7 @@ def train():
 
     model = Model()
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=params["lr"])
+    optimizer = torch.optim.Adam(model.parameters(), lr=params["lr"], weight_decay=1e-4)
 
     for epoch in range(params["epochs"]):
         outputs = model(X_train_t)
