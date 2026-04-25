@@ -16,3 +16,12 @@ services:
     depends_on:
       - api
     restart: unless-stopped
+
+  batch:
+    build: .
+    environment:
+      - IRIS_DB_PATH=/data/iris.db
+    volumes:
+      - ./data:/data
+    command: python batch_predict.py schedule --interval 300
+    restart: unless-stopped
